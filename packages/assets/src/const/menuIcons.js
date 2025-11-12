@@ -3,15 +3,15 @@ import {SettingsIcon, ShareIcon} from '@shopify/polaris-icons';
 const menuIcons = [
   {
     icon: ShareIcon,
-    destination: '/samples'
+    destination: '/'
+  },
+  {
+    icon: SettingsIcon,
+    destination: '/notifications'
   },
   {
     icon: SettingsIcon,
     destination: '/settings'
-  },
-  {
-    icon: SettingsIcon,
-    destination: '/optional-scopes'
   }
 ];
 

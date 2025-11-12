@@ -51,6 +51,9 @@ app.use(
         success: true
       });
     },
+    afterInstall: async ctx => {
+      console.log('This is the after install 2');
+    },
     optionalScopes: shopifyOptionalScopes
   }).routes()
 );

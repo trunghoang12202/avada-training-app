@@ -8,7 +8,6 @@ import {navigationLinks} from '@assets/const/navigation';
 export default function AppBridgeProvider({children}) {
   const {isFullscreen} = useContext(MaxModalContext);
   if (isFullscreen) return children; // hide navigation when open max modal
-
   return (
     <>
       <NavMenu>

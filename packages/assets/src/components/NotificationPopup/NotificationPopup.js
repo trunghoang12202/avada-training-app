@@ -1,5 +1,6 @@
 import React from 'react';
 import './NoticationPopup.scss';
+import PropTypes from 'prop-types';
 
 const NotificationPopup = ({
   firstName = 'John Doe',
@@ -7,7 +8,8 @@ const NotificationPopup = ({
   country = 'United States',
   productName = 'Puffer Jacket With Hidden Hood',
   timestamp = 'a day ago',
-  productImage = 'http://paris.mageplaza.com/images/shop/single/big-1.jpg'
+  productImage = 'https://img.freepik.com/free-psd/floating-white-sneaker-minimalist-shoe-design_191095-80028.jpg?semt=ais_hybrid&w=740&q=80',
+  settings = {hideTimeAgo: false, truncateProductName: false}
 }) => {
   return (
     <div className="Avava-SP__Wrapper fadeInUp animated">
@@ -39,6 +41,14 @@ const NotificationPopup = ({
   );
 };
 
-NotificationPopup.propTypes = {};
+NotificationPopup.propTypes = {
+  firstName: PropTypes.string,
+  city: PropTypes.string,
+  country: PropTypes.string,
+  productName: PropTypes.string,
+  timestamp: PropTypes.string,
+  productImage: PropTypes.string,
+  settings: PropTypes.object
+};
 
 export default NotificationPopup;

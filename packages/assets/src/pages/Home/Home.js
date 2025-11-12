@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
-import {BlockStack, Button, Card, InlineStack, Layout, Page, Text} from '@shopify/polaris';
-import {MaxModalContext} from '@assets/contexts/maxModalContext';
+import React, {useState} from 'react';
+import {Button, Card, InlineStack, Page, Text} from '@shopify/polaris';
+import useFetchApi from '@assets/hooks/api/useFetchApi';
 
 /**
  * Render a home page for overview
@@ -9,37 +9,25 @@ import {MaxModalContext} from '@assets/contexts/maxModalContext';
  * @constructor
  */
 export default function Home() {
-  const [enabled, setEnabled] = useState(false);
-  const {openFullscreen} = useContext(MaxModalContext);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const {data, loading} = useFetchApi({url: '/test'});
 
+  const toggleEnabled = () => setIsEnabled(!isEnabled);
   return (
-    <Page title="Dashboard">
-      <Layout>
-        <Layout.Section>
-          <BlockStack gap="400">
-            <Card>
-              <InlineStack blockAlign="center">
-                <Text as="span">Our app is {enabled ? 'enabled' : 'disabled'} on your store</Text>
-                <div style={{flex: 1}} />
-                <Button
-                  variant={enabled ? 'secondary' : 'primary'}
-                  onClick={() => setEnabled(prev => !prev)}
-                >
-                  {enabled ? 'Disable' : 'Enable'}
-                </Button>
-              </InlineStack>
-            </Card>
-            <Card>
-              <InlineStack gap="200" blockAlign="center">
-                <Text as="span">Fullscreen</Text>
-                <Button onClick={() => openFullscreen('/samples')}>Samples</Button>
-                <Button onClick={() => openFullscreen('/settings')}>Settings</Button>
-                <Button url="/fullscreen-page-a">Fullscreen page a</Button>
-              </InlineStack>
-            </Card>
-          </BlockStack>
-        </Layout.Section>
-      </Layout>
+    <Page title="Home">
+      <Card>
+        <InlineStack align="space-between" blockAlign="center">
+          <Text as={'span'}>
+            App status is&nbsp;
+            <Text as={'span'} fontWeight={'bold'}>
+              {!isEnabled ? 'disabled' : 'enabled'}
+            </Text>
+          </Text>
+          <Button onClick={toggleEnabled} size={'large'}>
+            {!isEnabled ? 'Enable' : 'Disable'}
+          </Button>
+        </InlineStack>
+      </Card>
     </Page>
   );
 }

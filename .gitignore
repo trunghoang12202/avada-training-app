@@ -78,3 +78,10 @@ stats.json
 .runtimeconfig.json
 serviceAccount.json
 serviceAccount.*.json
+
+# Firebase configs
+packages/functions/.runtimeconfig.json
+packages/functions/serviceAccount*.json
+
+# Environment files
+packages/assets/.env*

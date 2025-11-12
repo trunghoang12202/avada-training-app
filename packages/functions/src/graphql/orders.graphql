@@ -1,0 +1,24 @@
+query {
+  orders(first: 30) {
+    nodes {
+      id
+      createdAt
+      customer {
+        firstName
+        defaultAddress {
+          city
+          country
+        }
+      }
+      lineItems(first: 1) {
+        nodes {
+          id
+          name
+          image {
+            url
+          }
+        }
+      }
+    }
+  }
+}

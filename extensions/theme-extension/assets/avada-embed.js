@@ -1,5 +1,5 @@
 (function() {
-  const BASE_URL = 'https://feat-casa-northwest-combine.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://internship-cherry-sees-donor.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   scriptElement.type = 'text/javascript';

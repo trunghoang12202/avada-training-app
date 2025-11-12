@@ -8,6 +8,7 @@ import {verifyEmbedRequest} from '@avada/core';
 import shopifyConfig from '@functions/config/shopify';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
+import {afterInstallService} from '@functions/services/afterInstallService';
 
 // Initialize all demand configuration for an application
 const api = new App();
@@ -32,9 +33,7 @@ api.use(
     optionalScopes: shopifyOptionalScopes,
     accessTokenKey: shopifyConfig.accessTokenKey,
     afterLogin: ctx => {},
-    afterInstall: ctx => {
-      console.log('This is the after install');
-    },
+    afterInstall: afterInstallService,
     initialPlan: {
       id: 'free',
       name: 'Free',

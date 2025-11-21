@@ -70,6 +70,14 @@
         "function": "embedApp"
       },
       {
+        "source": "/webhook/**",
+        "function": "webhook"
+      },
+      {
+        "source": "/apiClient/**",
+        "function": "apiClient"
+      },
+      {
         "source": "**",
         "destination": "/standalone.html"
       }

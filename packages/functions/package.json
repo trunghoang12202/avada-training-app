@@ -27,7 +27,9 @@
     "koa-router": "^14.0.0",
     "node-fetch": "^2.6.7",
     "qs": "^6.11.0",
-    "shopify-api-node": "3.11.0"
+    "shopify-api-node": "3.11.0",
+    "yup": "^1.7.1",
+    "@koa/cors": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

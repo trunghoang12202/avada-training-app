@@ -8,6 +8,7 @@ import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
+import {afterInstall} from '@functions/services/installationService';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -51,9 +52,7 @@ app.use(
         success: true
       });
     },
-    afterInstall: async ctx => {
-      console.log('This is the after install 2');
-    },
+    afterInstall: afterInstall,
     optionalScopes: shopifyOptionalScopes
   }).routes()
 );

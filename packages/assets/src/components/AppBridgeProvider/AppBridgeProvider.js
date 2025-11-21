@@ -11,7 +11,7 @@ export default function AppBridgeProvider({children}) {
   return (
     <>
       <NavMenu>
-        <Link to="/embed" rel="home">
+        <Link to="/" rel="home">
           Home
         </Link>
         {navigationLinks.map(link => (

@@ -1,0 +1,27 @@
+query getOrder($id: ID!) {
+  order(id: $id) {
+    id
+    createdAt
+    customer {
+      firstName
+    }
+    displayAddress{
+      city
+      country
+    }
+    lineItems(first: 1) {
+      edges {
+        node {
+          id
+          name
+          image {
+            url
+          }
+          product {
+            handle
+          }
+        }
+      }
+    }
+  }
+}

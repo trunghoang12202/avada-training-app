@@ -1,0 +1,25 @@
+.Avada-PreviewContainer {
+  display: flex;
+  flex-direction: column;
+  height: 90dvh;
+  padding: 12px;
+
+  .Avada-PreviewHeader {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e1e3e5;
+  }
+
+  .Avada-PreviewBody {
+    flex: 1;
+    margin-top: 12px;
+
+    background: rgba(241, 241, 241, 1);
+    border-radius: 18px;
+
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+  }
+}

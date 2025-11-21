@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, InlineStack, Page, Text} from '@shopify/polaris';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 
@@ -9,10 +9,17 @@ import useFetchApi from '@assets/hooks/api/useFetchApi';
  * @constructor
  */
 export default function Home() {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const {data, loading} = useFetchApi({url: '/test'});
+  const {fetchApi, data, setData: setStatus, loading} = useFetchApi({url: '/status'});
 
-  const toggleEnabled = () => setIsEnabled(!isEnabled);
+  const handleRefreshStatus = async () => {
+    await fetchApi('/status');
+  };
+  const toggleEnabled = () => {
+    open(
+      `https://${shopify.config.shop}/admin/themes/current/editor?context=apps&activateAppId=${shopify.config.apiKey}/avada-sale-pop`,
+      '_top'
+    );
+  };
   return (
     <Page title="Home">
       <Card>
@@ -20,12 +27,23 @@ export default function Home() {
           <Text as={'span'}>
             App status is&nbsp;
             <Text as={'span'} fontWeight={'bold'}>
-              {!isEnabled ? 'disabled' : 'enabled'}
+              {!data.status ? 'disabled' : 'enabled'}
             </Text>
           </Text>
-          <Button onClick={toggleEnabled} size={'large'}>
-            {!isEnabled ? 'Enable' : 'Disable'}
-          </Button>
+          <InlineStack gap={'200'}>
+            <Button variant={'plain'} loading={loading} onClick={handleRefreshStatus}>
+              Refresh Status
+            </Button>
+            <Button
+              loading={loading}
+              onClick={toggleEnabled}
+              size={'large'}
+              variant={'primary'}
+              tone={!data.status ? '' : 'critical'}
+            >
+              {!data.status ? 'Enable' : 'Disable'}
+            </Button>
+          </InlineStack>
         </InlineStack>
       </Card>
     </Page>

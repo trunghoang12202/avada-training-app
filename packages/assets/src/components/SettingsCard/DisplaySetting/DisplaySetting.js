@@ -1,25 +1,29 @@
-import React, {useState} from 'react';
-import {Text, Layout, LegacyCard, Checkbox, Page, InlineGrid, BlockStack} from '@shopify/polaris';
+import React from 'react';
+import {Text, Layout, Checkbox, InlineGrid, BlockStack, ChoiceList} from '@shopify/polaris';
 import DesktopPositionInput from '@assets/components/DesktopPositionInput/DesktopPositionInput';
-import PropTypes from 'prop-types';
 import RangeSliderWithUnit from '@assets/components/RangeSliderWithUnit/RangeSliderWithUnit';
+import PropTypes from 'prop-types';
 
-const DisplaySetting = ({settings, onUpdate}) => {
+const DisplaySetting = ({settings, onChangeSettings}) => {
   const handleChangeProperty = key => {
     return value => {
-      onUpdate(key, value);
+      onChangeSettings(key, value);
     };
   };
   const handleChangePosition = value => {
-    onUpdate('position', value);
+    onChangeSettings('position', value);
   };
 
   const handleToggleHideTimeAgo = value => {
-    onUpdate('hideTimeAgo', value);
+    onChangeSettings('hideTimeAgo', value);
   };
 
   const handleToggleTruncate = value => {
-    onUpdate('truncateProductName', value);
+    onChangeSettings('truncateProductName', value);
+  };
+
+  const handleChoiceDisplayBy = value => {
+    onChangeSettings('displayBy', value);
   };
 
   const options = [
@@ -47,6 +51,11 @@ const DisplaySetting = ({settings, onUpdate}) => {
             checked={settings.hideTimeAgo}
             onChange={handleToggleHideTimeAgo}
           />
+          {/* <Checkbox*/}
+          {/*  label={'Hide close button'}*/}
+          {/*  checked={settings.hideTimeAgo}*/}
+          {/*  onChange={() => {}}*/}
+          {/* />*/}
           <Checkbox
             label={'Truncate content text'}
             checked={settings.truncateProductName}
@@ -107,6 +116,17 @@ const DisplaySetting = ({settings, onUpdate}) => {
             </InlineGrid>
           </BlockStack>
         </BlockStack>
+        <BlockStack>
+          <ChoiceList
+            title="Display by"
+            choices={[
+              {label: 'Display randomly', value: 'randomly'},
+              {label: 'Display in order', value: 'order'}
+            ]}
+            selected={settings.displayBy}
+            onChange={handleChoiceDisplayBy}
+          />
+        </BlockStack>
       </BlockStack>
     </Layout>
   );
@@ -114,7 +134,7 @@ const DisplaySetting = ({settings, onUpdate}) => {
 
 DisplaySetting.propTypes = {
   settings: PropTypes.object,
-  onUpdate: PropTypes.func
+  onChangeSettings: PropTypes.func
 };
 
 export default DisplaySetting;

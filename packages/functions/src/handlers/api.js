@@ -8,7 +8,7 @@ import {verifyEmbedRequest} from '@avada/core';
 import shopifyConfig from '@functions/config/shopify';
 import appConfig from '@functions/config/app';
 import shopifyOptionalScopes from '@functions/config/shopifyOptionalScopes';
-import {afterInstallService} from '@functions/services/afterInstallService';
+import {afterInstall} from '@functions/services/installationService';
 
 // Initialize all demand configuration for an application
 const api = new App();
@@ -32,8 +32,8 @@ api.use(
     isEmbeddedApp: true,
     optionalScopes: shopifyOptionalScopes,
     accessTokenKey: shopifyConfig.accessTokenKey,
-    afterLogin: ctx => {},
-    afterInstall: afterInstallService,
+    afterLogin: async ctx => {},
+    afterInstall: afterInstall,
     initialPlan: {
       id: 'free',
       name: 'Free',

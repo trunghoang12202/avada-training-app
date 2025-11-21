@@ -1,32 +1,23 @@
 import React, {Suspense, useState, lazy} from 'react';
-import {LegacyCard, Tabs} from '@shopify/polaris';
-import Loading from '@assets/components/Loading';
+import {LegacyCard, Loading, Tabs} from '@shopify/polaris';
 import PropTypes from 'prop-types';
-
-const DisplaySetting = lazy(() =>
-  import('@assets/components/SettingsCard/DisplaySetting/DisplaySetting')
-);
-const TriggersSetting = lazy(() =>
-  import('@assets/components/SettingsCard/TriggerSetting/TriggerSetting')
-);
+import DisplaySetting from '@assets/components/SettingsCard/DisplaySetting/DisplaySetting';
+import TriggersSetting from '@assets/components/SettingsCard/TriggerSetting/TriggerSetting';
 
 /**
  * @returns {JSX.Element}
  * @constructor
  */
-const SettingsCard = ({settings, setSettings}) => {
+const SettingsCard = ({settingsValue, onChangeSettings}) => {
   const [selected, setSelected] = useState(0);
 
-  const onUpdate = (key, value) => {
-    setSettings(prev => ({...prev, [key]: value}));
-  };
   const tabs = [
     {
       id: 'display',
       content: 'Display',
       contentJsx: (
         <LegacyCard.Section>
-          <DisplaySetting settings={settings} onUpdate={onUpdate} />
+          <DisplaySetting settings={settingsValue} onChangeSettings={onChangeSettings} />
         </LegacyCard.Section>
       )
     },
@@ -35,7 +26,7 @@ const SettingsCard = ({settings, setSettings}) => {
       content: 'Triggers',
       contentJsx: (
         <LegacyCard.Section>
-          <TriggersSetting settings={settings} onUpdate={onUpdate} />
+          <TriggersSetting settings={settingsValue} onChangeSettings={onChangeSettings} />
         </LegacyCard.Section>
       )
     }
@@ -43,15 +34,15 @@ const SettingsCard = ({settings, setSettings}) => {
   return (
     <LegacyCard>
       <Tabs selected={selected} tabs={tabs} onSelect={setSelected}>
-        <Suspense fallback={<Loading />}>{tabs[selected].contentJsx}</Suspense>
+        {tabs[selected].contentJsx}
       </Tabs>
     </LegacyCard>
   );
 };
 
 SettingsCard.propTypes = {
-  settings: PropTypes.object,
-  setSettings: PropTypes.func
+  settingsValue: PropTypes.object,
+  onChangeSettings: PropTypes.func
 };
 
 export default SettingsCard;

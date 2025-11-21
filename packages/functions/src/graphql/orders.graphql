@@ -1,14 +1,14 @@
 query {
-  orders(first: 30) {
+  orders(first: 30, sortKey: CREATED_AT, reverse: true) {
     nodes {
       id
       createdAt
       customer {
         firstName
-        defaultAddress {
-          city
-          country
-        }
+      }
+      displayAddress{
+        city
+        country
       }
       lineItems(first: 1) {
         nodes {
@@ -16,6 +16,9 @@ query {
           name
           image {
             url
+          }
+          product {
+            handle
           }
         }
       }

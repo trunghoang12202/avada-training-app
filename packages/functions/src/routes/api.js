@@ -3,6 +3,7 @@ import * as sampleController from '@functions/controllers/sampleController';
 import * as shopController from '@functions/controllers/shopController';
 import * as subscriptionController from '@functions/controllers/subscriptionController';
 import * as appNewsController from '@functions/controllers/appNewsController';
+import * as themeAppExtController from '@functions/controllers/themeAppExtController';
 import {getApiPrefix} from '@functions/const/app';
 import settingRouter from '@functions/routes/settings';
 import notificationRouter from '@functions/routes/notifications';
@@ -10,6 +11,7 @@ import notificationRouter from '@functions/routes/notifications';
 export default function apiRouter(isEmbed = false) {
   const router = new Router({prefix: getApiPrefix(isEmbed)});
 
+  router.get('/status', themeAppExtController.getThemeAppExtStatus);
   router.get('/samples', sampleController.exampleAction);
   router.get('/shops', shopController.getUserShops);
   router.get('/subscription', subscriptionController.getSubscription);
@@ -19,6 +21,7 @@ export default function apiRouter(isEmbed = false) {
   router.post('/subscriptions', subscriptionController.createOne);
   router.put('/subscriptions', subscriptionController.updateOne);
   router.delete('/subscriptions/:id', subscriptionController.deleteOne);
+
   router.use('/settings', settingRouter.routes());
   router.use('/notifications', notificationRouter.routes());
 

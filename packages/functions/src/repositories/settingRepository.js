@@ -13,9 +13,7 @@ export async function getSettingByShopId(shopId) {
     .where('shopId', '==', shopId)
     .limit(1)
     .get();
-  if (settingsSnapshot.empty) {
-    return null;
-  }
+  if (settingsSnapshot.empty) return null;
   return settingsSnapshot.docs[0].data();
 }
 
@@ -36,6 +34,11 @@ export async function updateSettingByShopId(shopId, data) {
   return {id: settingsDoc.id};
 }
 
+/**
+ *
+ * @param data
+ * @returns {Promise<string>}
+ */
 export async function addDefaultSettings(data) {
   const created = await collection.add(data);
   return created.id;

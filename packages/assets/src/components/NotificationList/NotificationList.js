@@ -1,39 +1,46 @@
 import React, {useState} from 'react';
-import {ResourceItem, ResourceList} from '@shopify/polaris';
+import {ResourceList} from '@shopify/polaris';
 import NotificationItem from '@assets/components/NotificationList/NotificationItem/NotificationItem';
 import PropTypes from 'prop-types';
 
-const NotificationList = ({notifications, loading}) => {
+const NotificationList = ({
+  notifications,
+  loading,
+  pageInfo,
+  sortValue,
+  handleSortChange,
+  handleNextPage,
+  handlePrevPage
+}) => {
   const [selectedItems, setSelectedItems] = useState();
-  const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
-
+  const {hasNext, hasPrev} = pageInfo;
   const resourceName = {
-    plural: 'Notifications',
-    singular: 'Notification'
+    plural: 'notifications',
+    singular: 'notification'
   };
   const sortOptions = [
-    {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
-    {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'}
+    {label: 'Newest update', value: 'desc'},
+    {label: 'Oldest update', value: 'asc'}
   ];
   const renderItem = notification => <NotificationItem notification={{...notification}} />;
   return (
     <ResourceList
       resourceName={resourceName}
-      items={items}
+      items={notifications}
       renderItem={renderItem}
       selectable={true}
       selectedItems={selectedItems}
       onSelectionChange={setSelectedItems}
       pagination={{
-        hasNext: true,
-        hasPrevious: true,
-        onNext: () => {},
-        onPrevious: () => {}
+        hasNext: hasNext,
+        hasPrevious: hasPrev,
+        onNext: handleNextPage,
+        onPrevious: handlePrevPage
       }}
       sortOptions={sortOptions}
       sortValue={sortValue}
       onSortChange={selected => {
-        setSortValue(selected);
+        handleSortChange(selected);
       }}
       loading={loading}
     />
@@ -42,7 +49,12 @@ const NotificationList = ({notifications, loading}) => {
 
 NotificationList.propTypes = {
   notifications: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  pageInfo: PropTypes.object,
+  sortValue: PropTypes.string,
+  handleSortChange: PropTypes.func,
+  handleNextPage: PropTypes.func,
+  handlePrevPage: PropTypes.func
 };
 
 export default NotificationList;

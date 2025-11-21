@@ -17,7 +17,7 @@ export default function Home() {
   const toggleEnabled = () => {
     open(
       `https://${shopify.config.shop}/admin/themes/current/editor?context=apps&activateAppId=${shopify.config.apiKey}/avada-sale-pop`,
-      '_top'
+      '_blank'
     );
   };
   return (

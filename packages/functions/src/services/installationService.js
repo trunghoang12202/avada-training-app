@@ -2,7 +2,6 @@ import {syncOrdersToNotification} from '@functions/services/orderService';
 import {addDefaultSettingsForShop} from '@functions/services/settingService';
 import {getShopByShopifyDomain} from '@avada/core';
 import {registerWebhook} from '@functions/services/webhookService';
-import {registerScriptTag} from '@functions/services/shopifyService';
 
 /**
  *

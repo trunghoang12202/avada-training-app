@@ -1,5 +1,11 @@
 import * as yup from 'yup';
 
+/**
+ *
+ * @param ctx
+ * @param next
+ * @returns {Promise<void>}
+ */
 export default async function settingInputMiddleware(ctx, next) {
   const schema = yup
     .object({

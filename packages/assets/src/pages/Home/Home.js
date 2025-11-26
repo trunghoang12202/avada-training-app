@@ -26,7 +26,7 @@ export default function Home() {
         <InlineStack align="space-between" blockAlign="center">
           <Text as={'span'}>
             App status is&nbsp;
-            <Text as={'span'} fontWeight={'bold'}>
+            <Text as={'span'} fontWeight={'bold'} visuallyHidden={loading}>
               {!data.status ? 'disabled' : 'enabled'}
             </Text>
           </Text>

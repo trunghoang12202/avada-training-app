@@ -14,8 +14,11 @@ const NotificationPopup = ({
     showOnMobile: true,
     position: 'bottom-left',
     hideTimeAgo: false,
-    truncateProductName: false
-  }
+    truncateProductName: false,
+    hideCustomerName: false,
+    hideCloseButton: false
+  },
+  onClose = () => {}
 }) => {
   const finalLink = productLink || '#';
 
@@ -23,6 +26,15 @@ const NotificationPopup = ({
     <div className={`Avava-SP__Wrapper Avava-SP__Wrapper--${settingsValue.position}`}>
       <div className="Avava-SP__Inner">
         <div className="Avava-SP__Container">
+          {!settingsValue.hideCloseButton && (
+            <button
+              className="Avava-SP__CloseButton"
+              onClick={onClose}
+              aria-label="Close notification"
+            >
+              ×
+            </button>
+          )}
           <a href={finalLink} className="Avava-SP__LinkWrapper">
             <div className="Avava-SP__Image" style={{backgroundImage: `url(${productImage})`}} />
 
@@ -32,7 +44,7 @@ const NotificationPopup = ({
                   settingsValue.truncateProductName ? 'Avada-SP__Title--truncate' : ''
                 }`}
               >
-                {firstName} in {city}, {country}
+                {settingsValue.hideCustomerName ? 'Something' : firstName} in {city}, {country}
               </div>
 
               <div
@@ -67,7 +79,15 @@ NotificationPopup.propTypes = {
   relativeDate: PropTypes.string,
   productImage: PropTypes.string,
   productLink: PropTypes.string,
-  settingsValue: PropTypes.object
+  settingsValue: PropTypes.shape({
+    showOnMobile: PropTypes.bool,
+    position: PropTypes.string,
+    hideTimeAgo: PropTypes.bool,
+    truncateProductName: PropTypes.bool,
+    hideCustomerName: PropTypes.bool,
+    hideCloseButton: PropTypes.bool
+  }),
+  onClose: PropTypes.func
 };
 
 export default NotificationPopup;

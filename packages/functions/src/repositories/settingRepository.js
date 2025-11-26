@@ -29,17 +29,21 @@ export async function updateSettingByShopId(shopId, data) {
     .limit(1)
     .get();
   if (settingsSnapshot.empty) return null;
-  const settingsDoc = await collection.doc(settingsSnapshot.docs[0].id);
-  await settingsDoc.set(data, {merge: true});
-  return {id: settingsDoc.id};
+  const settingsDoc = collection.doc(settingsSnapshot.docs[0].id);
+  await settingsDoc.update(data);
+  return {id: settingsDoc.id, ...settingsDoc.data(), ...data};
 }
 
 /**
  *
  * @param data
- * @returns {Promise<string>}
+ * @returns {Promise<object>}
  */
 export async function addDefaultSettings(data) {
+  const shopSettings = await getSettingByShopId(data.shopId);
+
+  if (shopSettings) return shopSettings;
+
   const created = await collection.add(data);
-  return created.id;
+  return {id: created.id, ...data};
 }

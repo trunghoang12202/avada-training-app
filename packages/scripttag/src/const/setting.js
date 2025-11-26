@@ -4,7 +4,7 @@ export const ALLOW_SHOW_OPTIONS = {
   HOME_PAGE: 'home'
 };
 
-export const SPECTIFIC_PAGES_OPTIONS = {
+export const SPECIFIC_PAGES_OPTIONS = {
   HOME: 'home',
   CART: 'cart',
   COLLECTION: 'collection',

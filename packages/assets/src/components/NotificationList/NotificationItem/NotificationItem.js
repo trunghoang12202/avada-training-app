@@ -2,9 +2,9 @@ import React from 'react';
 import NotificationPopup from '@assets/components/NotificationPopup/NotificationPopup';
 import {ResourceItem} from '@shopify/polaris';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 const NotificationItem = ({notification}) => {
+  console.log(notification);
   const {id, firstName, city, country, productName, timestamp, productImage} = notification;
   return (
     <ResourceItem id={id}>
@@ -13,7 +13,7 @@ const NotificationItem = ({notification}) => {
         city={city}
         country={country}
         productName={productName}
-        timestamp={moment(timestamp).fromNow()}
+        timestamp={timestamp}
         productImage={productImage}
       />
     </ResourceItem>

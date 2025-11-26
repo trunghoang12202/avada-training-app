@@ -3,9 +3,14 @@ import {BlockStack, ChoiceList, Select, TextField} from '@shopify/polaris';
 import PropTypes from 'prop-types';
 
 const TriggerSetting = ({settings, onChangeSettings}) => {
-  const handleSelectSpecificPages = value => {
-    onChangeSettings('specificPages', value);
-  };
+  const pages = [
+    {label: 'Home page', value: 'home'},
+    {label: 'Product page', value: 'product'},
+    {label: 'Cart page', value: 'cart'},
+    {label: 'Collection page', value: 'collection'},
+    {label: 'Blog page', value: 'blog'}
+  ];
+
   const renderChildrenSpecificPages = isSelected => {
     if (!isSelected) return null;
     return (
@@ -18,29 +23,28 @@ const TriggerSetting = ({settings, onChangeSettings}) => {
       />
     );
   };
+
   const choices = [
     {label: 'All pages', value: 'all'},
     {label: 'Home page only', value: 'home'},
-    {label: 'Specific pages', value: 'specific', renderChildren: renderChildrenSpecificPages}
+    {label: 'Specific pages', value: 'specificPages', renderChildren: renderChildrenSpecificPages}
   ];
-  const pages = [
-    {label: 'Home page', value: 'home'},
-    {label: 'Product page', value: 'product'},
-    {label: 'Cart page', value: 'cart'},
-    {label: 'Collection page', value: 'collection'},
-    {label: 'Blog page', value: 'blog'}
-  ];
+
+  const handleSelectSpecificPages = value => {
+    onChangeSettings('specificPages', value);
+  };
 
   const handleSelectChoiceType = value => {
     onChangeSettings('allowShow', value);
     onChangeSettings('specificPages', []);
   };
+
   return (
     <BlockStack gap={'200'}>
       <ChoiceList
         title="Display by"
         choices={choices}
-        selected={settings.allowShow || 'all'}
+        selected={settings.allowShow || ['all']}
         onChange={handleSelectChoiceType}
       />
     </BlockStack>

@@ -26,12 +26,25 @@ const DisplaySetting = ({settings, onChangeSettings}) => {
     onChangeSettings('displayBy', value);
   };
 
+  const handleChoiceReplayPlaylist = value => {
+    onChangeSettings('replayPlaylist', value);
+  };
+
+  const handleChoiceContinueAfterPageReload = value => {
+    onChangeSettings('continueAfterPageReload', value);
+  };
+
+  const handleHideCustomerName = value => {
+    onChangeSettings('hideCustomerName', value);
+  };
+
   const options = [
     {label: 'Bottom left', value: 'bottom-left'},
     {label: 'Bottom right', value: 'bottom-right'},
     {label: 'Top left', value: 'top-left'},
     {label: 'Top right', value: 'top-right'}
   ];
+
   return (
     <Layout sectioned>
       <BlockStack gap={'400'}>
@@ -51,11 +64,11 @@ const DisplaySetting = ({settings, onChangeSettings}) => {
             checked={settings.hideTimeAgo}
             onChange={handleToggleHideTimeAgo}
           />
-          {/* <Checkbox*/}
-          {/*  label={'Hide close button'}*/}
-          {/*  checked={settings.hideTimeAgo}*/}
-          {/*  onChange={() => {}}*/}
-          {/* />*/}
+          <Checkbox
+            label={'Hide customer name'}
+            checked={settings.hideCustomerName}
+            onChange={handleHideCustomerName}
+          />
           <Checkbox
             label={'Truncate content text'}
             checked={settings.truncateProductName}
@@ -89,7 +102,7 @@ const DisplaySetting = ({settings, onChangeSettings}) => {
                 max={60}
                 step={1}
                 unit={'seconds(s)'}
-                onChange={value => onUpdate('firstDelay', value)}
+                onChange={handleChangeProperty('firstDelay')}
               />
             </InlineGrid>
             <InlineGrid columns={2} gap={'200'}>
@@ -101,7 +114,7 @@ const DisplaySetting = ({settings, onChangeSettings}) => {
                 max={30}
                 step={1}
                 unit={'seconds(s)'}
-                onChange={value => onUpdate('popsInterval', value)}
+                onChange={handleChangeProperty('popsInterval')}
               />
               <RangeSliderWithUnit
                 label="Maximum of popups"
@@ -111,21 +124,42 @@ const DisplaySetting = ({settings, onChangeSettings}) => {
                 max={80}
                 step={1}
                 unit={'pop(s)'}
-                onChange={value => onUpdate('maxPopsDisplay', value)}
+                onChange={handleChangeProperty('maxPopsDisplay')}
               />
             </InlineGrid>
           </BlockStack>
         </BlockStack>
-        <BlockStack>
+        <BlockStack gap={'400'}>
+          <Text variant={'bodySm'} as={'p'} fontWeight={'bold'}>
+            STRATEGY
+          </Text>
           <ChoiceList
             title="Display by"
             choices={[
-              {label: 'Display randomly', value: 'randomly'},
+              {label: 'Display randomly', value: 'random'},
               {label: 'Display in order', value: 'order'}
             ]}
             selected={settings.displayBy}
             onChange={handleChoiceDisplayBy}
           />
+          <BlockStack>
+            <Checkbox
+              label="Replay playlist"
+              checked={settings.replayPlaylist}
+              onChange={handleChoiceReplayPlaylist}
+              helpText={
+                'If enabled, the playlist will be replayed when all items have all been displayed.'
+              }
+            />
+            <Checkbox
+              label="Continue after page reload"
+              checked={settings.continueAfterPageReload}
+              onChange={handleChoiceContinueAfterPageReload}
+              helpText={
+                'If enabled, after the page is reloaded, the next popup is displayed. If not, the list will be replayed from the start.'
+              }
+            />
+          </BlockStack>
         </BlockStack>
       </BlockStack>
     </Layout>

@@ -1,5 +1,6 @@
 import {Firestore} from '@google-cloud/firestore';
 import {Timestamp} from '@google-cloud/firestore/build/src';
+import moment from 'moment';
 
 const db = new Firestore();
 const collection = db.collection('notifications');
@@ -67,7 +68,7 @@ export async function getNotificationsByShopId(shopId, options) {
   const data = realDocs.map(doc => ({
     id: doc.id,
     ...doc.data(),
-    timestamp: doc.data().timestamp.toDate()
+    timestamp: moment(doc.data().timestamp.toDate()).fromNow()
   }));
 
   return {

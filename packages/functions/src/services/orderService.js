@@ -1,5 +1,5 @@
 import {loadGraphQL} from '@functions/helpers/graphql/graphqlHelpers';
-import {deepUnwrap} from '@functions/helpers/utils/graphql';
+import {normalizeGraphQLResponse} from '@functions/helpers/graphql/graphqlHelpers';
 import {initShopify} from '@functions/services/shopifyService';
 import {mapOrderToNotification} from '@functions/helpers/mapOrderToNotification';
 import {
@@ -15,7 +15,7 @@ import {
 export async function getOrders(shopify) {
   const query = loadGraphQL('/orders.graphql');
   const data = await shopify.graphql(query);
-  return deepUnwrap(data.orders);
+  return normalizeGraphQLResponse(data.orders);
 }
 
 /**
@@ -28,21 +28,30 @@ export async function syncOrdersToNotification(shop) {
   const orders = await getOrders(shopify);
   const notifications = orders.map(order => mapOrderToNotification(shop.id, order));
   const notificationsInFirestore = await getNotificationsWithoutOptions(shop.id);
-  const mapOrderIdToFirestoreId = {};
-  notificationsInFirestore.forEach(n => {
-    mapOrderIdToFirestoreId[n.orderId] = n.id;
-  });
-
-  const syncedNotifications = notifications.map(notification => {
-    const existingId = mapOrderIdToFirestoreId[notification.orderId];
-
-    return {
-      ...notification,
-      id: existingId || null
-    };
-  });
+  const syncedNotifications = mapNotificationsWithExistingIds(
+    notifications,
+    notificationsInFirestore
+  );
 
   return await syncNotifications(syncedNotifications);
+}
+
+/**
+ *
+ * @param notifications
+ * @param notificationsInFirestore
+ * @returns {*}
+ */
+function mapNotificationsWithExistingIds(notifications, notificationsInFirestore) {
+  const mapOrderIdToFirestoreId = notificationsInFirestore.reduce((acc, notification) => {
+    acc[notification.orderId] = notification.id;
+    return acc;
+  }, {});
+
+  return notifications.map(notification => ({
+    ...notification,
+    id: mapOrderIdToFirestoreId[notification.orderId] || null
+  }));
 }
 
 /**
@@ -54,6 +63,6 @@ export async function syncOrdersToNotification(shop) {
 export async function getNotificationItem(shopify, orderData) {
   const query = loadGraphQL('/order.graphql');
   const data = await shopify.graphql(query, {id: orderData.admin_graphql_api_id});
-  const order = deepUnwrap(data.order);
+  const order = normalizeGraphQLResponse(data.order);
   return mapOrderToNotification(orderData.shopId, order);
 }

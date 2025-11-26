@@ -1,7 +1,12 @@
-export function deepUnwrap(obj) {
+/**
+ *
+ * @param obj
+ * @returns {{}|*|(*|{})[]}
+ */
+export function normalizeGraphQLResponse(obj) {
   if (obj == null) return obj;
 
-  if (Array.isArray(obj)) return obj.map(deepUnwrap);
+  if (Array.isArray(obj)) return obj.map(normalizeGraphQLResponse);
 
   if (typeof obj === 'object') {
     if (Array.isArray(obj.nodes)) return obj.nodes.map(deepUnwrap);
@@ -9,7 +14,7 @@ export function deepUnwrap(obj) {
     const out = {};
     for (const [k, v] of Object.entries(obj)) {
       if (k === '__typename') continue;
-      out[k] = deepUnwrap(v);
+      out[k] = normalizeGraphQLResponse(v);
     }
     return out;
   }

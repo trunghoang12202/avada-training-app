@@ -16,6 +16,7 @@ import {SaveBar, useAppBridge} from '@shopify/app-bridge-react';
 import NotificationPopup from '@assets/components/NotificationPopup/NotificationPopup';
 import MobileScreenPreview from '@assets/components/ScreenPreview/MobileScreenPreview';
 import SettingsCard from '@assets/components/SettingsCard/SettingsCard';
+import SettingsSkeleton from '@assets/components/SettingsSkeleton/SettingsSkeleton';
 import useFetchApi from '@assets/hooks/api/useFetchApi';
 import {defaultSettings} from '@assets/const/defaultSettings';
 import {api} from '@assets/helpers';
@@ -79,28 +80,7 @@ export default function Settings() {
     await shopify.saveBar.hide('save-bar-settings');
   };
 
-  if (loading)
-    return (
-      <SkeletonPage title={'Settings'}>
-        <Layout>
-          <Layout.Section variant="oneThird">
-            <Card>
-              <InlineStack gap={'200'} alignment="space-between" wrap={false}>
-                <SkeletonThumbnail></SkeletonThumbnail>
-                <SkeletonBodyText lines={5} />
-              </InlineStack>
-            </Card>
-          </Layout.Section>
-          <Layout.Section>
-            <Card>
-              <SkeletonTabs></SkeletonTabs>
-              <SkeletonBodyText lines={24}></SkeletonBodyText>
-            </Card>
-          </Layout.Section>
-        </Layout>
-      </SkeletonPage>
-    );
-
+  if (loading) return <SettingsSkeleton />;
   return (
     <Page title="Settings" subtitle="Decide how your notifications will display">
       <Layout>

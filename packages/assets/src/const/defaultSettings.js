@@ -44,6 +44,8 @@ export const defaultSettings = {
   headingText: '{{first_name}} in {{city}}, {{country}}',
   contentText: 'Purchased {{product_name}}',
   hideCustomerName: false,
+  replayPlaylist: false,
+  continueAfterPageReload: false,
   backgroundColorStart: '#1983ff',
   backgroundColorEnd: '#1983ff',
   headingColor: '#ffffff',

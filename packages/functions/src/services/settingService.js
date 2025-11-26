@@ -7,5 +7,5 @@ import {defaultSettings} from '@functions/const/defaultSettings';
  * @returns {Promise<string>}
  */
 export async function addDefaultSettingsForShop(shop) {
-  return await addDefaultSettings({shopId: shop.id, ...defaultSettings});
+  return addDefaultSettings({shopId: shop.id, ...defaultSettings});
 }

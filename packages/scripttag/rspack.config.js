@@ -46,7 +46,8 @@ module.exports = {
   devtool: isProduction ? false : 'eval-source-map',
   experiments: {asyncWebAssembly: true, topLevelAwait: true},
   output: {
-    path: path.resolve(__dirname, '../../extensions/avada-theme-app-extension/assets'),
+    // path: path.resolve(__dirname, '../../extensions/avada-theme-app-extension/assets'),
+    path: path.resolve(__dirname, '../../static/scripttag'),
     filename: 'avada-sale-pop.min.js',
     publicPath: jsPath,
     chunkFilename: '[name].[contenthash].bundle.js',
